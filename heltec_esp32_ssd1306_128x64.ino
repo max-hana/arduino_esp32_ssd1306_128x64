@@ -21,8 +21,9 @@ All text above, and the splash screen must be included in any redistribution
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-#define OLED_RESET 4
+#define OLED_RESET 16 // 4
 Adafruit_SSD1306 display(OLED_RESET);
+
 
 #define NUMFLAKES 10
 #define XPOS 0
@@ -54,11 +55,19 @@ static const unsigned char PROGMEM logo16_glcd_bmp[] =
 #error("Height incorrect, please fix Adafruit_SSD1306.h!");
 #endif
 
-void setup()   {                
+void setup()   {
+//  pinMode(16,OUTPUT);
+//  digitalWrite(16, LOW); // set GPIO16 low to reset OLED
+//  delay(150);
+//  digitalWrite(16, HIGH);
+
+  //Wire.begin(4,15);
+                
   Serial.begin(9600);
 
   // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3D);  // initialize with the I2C addr 0x3D (for the 128x64)
+  // display.begin(SSD1306_SWITCHCAPVCC, 0x3D);  // initialize with the I2C addr 0x3D (for the 128x64)
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C, 1);  // initialize with the I2C addr 0x3D (for the 128x64)
   // init done
   
   // Show image buffer on the display hardware.
@@ -68,9 +77,11 @@ void setup()   {
   delay(2000);
 
   // Clear the buffer.
+  Serial.println("clearDisplay();");
   display.clearDisplay();
 
   // draw a single pixel
+  Serial.println("drawPixel(10, 10, WHITE);");
   display.drawPixel(10, 10, WHITE);
   // Show the display buffer on the hardware.
   // NOTE: You _must_ call display after making any drawing commands
@@ -79,25 +90,30 @@ void setup()   {
   delay(2000);
   display.clearDisplay();
 
+
   // draw many lines
+  Serial.println("testdrawline();");
   testdrawline();
   display.display();
   delay(2000);
   display.clearDisplay();
 
   // draw rectangles
+  Serial.println("testdrawrect();");
   testdrawrect();
   display.display();
   delay(2000);
   display.clearDisplay();
 
   // draw multiple rectangles
+  Serial.println("testfillrect(); // multi");
   testfillrect();
   display.display();
   delay(2000);
   display.clearDisplay();
 
   // draw mulitple circles
+  Serial.println("testdrawcircle(); // multi");
   testdrawcircle();
   display.display();
   delay(2000);
