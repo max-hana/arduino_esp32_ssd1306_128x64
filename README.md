@@ -1,6 +1,6 @@
 # arduino_esp32_ssd1306_128x64
 
-- This is a quick project starter for ESP32 with SSD1306 OLED modules.
+- This is a quick project starter for ESP32 with SSD1306 OLED modules(Heltec WIFI_KIT_32).
 
 ## installation instruction
 - Add esp32 tool chain to your Arduino IDE.
